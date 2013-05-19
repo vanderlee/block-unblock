@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Block-unblock</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+		<script src="jquery.block.js"></script>
+		<style>
+			body {
+				font-family: "Segoe UI", Verdana, Arial, Helvetica, sans-serif;
+				font-size: 12px;
+			}
+
+			.topmost {
+				position: relative;
+				z-index: 30000;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Block/Unblock</h1>
+		A effective and practical screen blocker for jQuery.
+
+		<h2>Download</h2>
+		Download from GitHub: <a href="https://github.com/vanderlee/block-unblock">https://github.com/vanderlee/block-unblock</a>
+		<br/>MIT licensed
+
+		<h2>Features</h2>
+		<ul>
+			<li>Delay; block immediately, but start the visualization after a short delay.</li>
+			<li>Timeout; unblock after a timeout period and call an event.</li>
+			<li>Optional content.</li>
+			<li>Styling either inline or using a classname or id.</li>
+			<li>Configurable fade-in speed.</li>
+			<li>Very simple API (<tt>$.block()</tt> and <tt>$.unblock()</tt>).</li>
+		</ul>
+
+		<h2>Example</h2>
+		<button id="block">Block</button>
+		<div class="topmost"><button id="unblock">Unblock</button></div>
+		<ul>
+			<li>delay visualization 1 second</li>
+			<li>timeout after 3 seconds (including delay)</li>
+		</ul>
+
+		<script>
+			$(function() {
+				$('#block').click(function() {
+					$.block({
+						delay: 1000,
+						timeout: 3000,
+						ontimeout: function() {
+							alert('Timeout');
+						}
+					});
+				});
+
+				$('#unblock').click(function() {
+					$.unblock();
+				});
+			});
+		</script>
+
+		<h2>Options</h2>
+		<ul>
+			<li>context: The context in which the blocking is used. Default 'body'.</li>
+			<li>css: A classname to assign to the overlay visualization.</li>
+			<li>delay: Wait this many milliseconds before showing visualization. (note that blocking functionality is always immediate). Default 500 (half a second).</li>
+			<li>id: An ID to assign the the overlay visualization.</li>
+			<li>message: HTML content to display in the center of the overlay.</li>
+			<li>speed: The speed with which to fade in the visualization. Default 'slow'.</li>
+			<li>style: Style of the overlay. Default 50% transparent black.</li>
+			<li>timeout: Time before timeout event is triggered and blocking automatically unblocked. Default 10000 (10 seconds).</li>
+			<li>zIndex: z-index of the overlay. Must be greater than any window it's supposed to block. Default 20000.</li>
+			</li>
+		</ul>
+
+		<h2>Events</h2>
+		<ul>
+			<li>onblock: Triggered when blocking starts.</li>
+			<li>onunblock: Triggered when blocking ends (not on timeout).</li>
+			<li>ontimeout: Triggered if a timeout occurs.</li>
+			<li>ondisplay: Triggered after the delay has passed and visualization starts.</li>
+		</ul>
+	</body>
+</html>
