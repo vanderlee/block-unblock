@@ -13,10 +13,10 @@
 (function($) {
     "use strict";
 
-    var overlay = undefined,
+    var blocker = undefined,
         options = {
             'context': 'body',
-            'css': undefined,
+            'class': undefined,
             'delay': 500,
             'id': undefined,
             'message': 'Please wait&hellip;',
@@ -37,20 +37,20 @@
         _unblock = function() {
             if (timeout) timeout = clearTimeout(timeout);
             if (delay) delay = clearTimeout(delay);
-            if (overlay) {
-                overlay.remove();
-                overlay = undefined;
+            if (blocker) {
+                blocker.remove();
+                blocker = undefined;
             }
         };
 
     $.block = function(_options) {
-        if (overlay) return;
+        if (blocker) return;
 
         if (_options) {
             $.extend(options, _options);
         }
 
-        overlay = $('<div/>').css({
+        blocker = $('<div/>').css({
             'z-index': options.zIndex,
             'position': 'fixed',
             'left': 0,
@@ -58,6 +58,7 @@
             'bottom': 0,
             'right': 0
         }).appendTo(options.context);
+		if (options.class) blocker.addClass(options.class + '-blocker');
 
         if (options.onblock) options.onblock();
 
@@ -75,14 +76,14 @@
                 'position': 'absolute',
                 'width': '100%',
                 'height': '100%'
-            }).hide().appendTo(overlay);
+            }).hide().appendTo(blocker);
 
             var background = $('<div/>').css({
                 'position': 'absolute',
                 'width': '100%',
                 'height': '100%'
             }).appendTo(container);
-            if (options.css) background.addClass(options.css);
+            if (options.class) background.addClass(options.class);
             if (options.style) background.css(options.style);
             if (options.id) background.attr('id', options.id);
 
@@ -99,6 +100,7 @@
                 'text-align': 'center',
                 'opacity': 1
             }).html(options.message).appendTo(table);
+            if (options.class) cell.addClass(options.class + '-message');
 
             container.fadeIn(options.speed);
         }, options.delay);
