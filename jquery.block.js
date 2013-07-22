@@ -99,8 +99,10 @@
                 'vertical-align': 'middle',
                 'text-align': 'center',
                 'opacity': 1
-            }).html(options.message).appendTo(table);
-            if (options.class) cell.addClass(options.class + '-message');
+            }).appendTo(table);
+
+            var message = $('<div/>').html(options.message).appendTo(cell);
+            if (options.class) message.addClass(options.class + '-message');
 
             container.fadeIn(options.speed);
         }, options.delay);
